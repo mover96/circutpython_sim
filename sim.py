@@ -2,6 +2,15 @@ import pygame
 
 num_pixels = 22
 OFF = (0,0,0)
+border_color = (255,255,255)
+
+window_width = 500
+border_x = 48
+border_y = 148
+border_len = 44
+pixel_x = 50
+pixel_y = 150
+pixel_side = 40
 
 class Pixels:
     def __init__(self, num_pixels):
@@ -13,9 +22,9 @@ class Pixels:
         self.screen.fill(OFF)
         for count, pixel in enumerate(self.pixels):
             x_offset = count * 55
-            border = pygame.Rect((48 + x_offset, 148), (44,44))
-            rect = pygame.Rect((50 + x_offset, 150), (40, 40))
-            pygame.display.update(pygame.draw.rect(self.screen, (255,255,255), border))
+            border = pygame.Rect((border_x + x_offset, border_y), (border_len, border_len))
+            rect = pygame.Rect((pixel_x + x_offset, pixel_y), (pixel_side, pixel_side))
+            pygame.display.update(pygame.draw.rect(self.screen, border_color, border))
             pygame.display.update(pygame.draw.rect(self.screen, pixel, rect))
     
     def __getitem__(self, index):
@@ -38,4 +47,4 @@ def init_pygame():
     pygame.display.set_icon(logo)
     pygame.display.set_caption("CircutPython Simulator")
      
-    return  pygame.display.set_mode((1500,500))
+    return  pygame.display.set_mode((1500, window_width))
