@@ -38,6 +38,10 @@ class Pixels:
 
     def count(self):
         return len(self.pixels)
+    
+    def fill(self, color):
+        for i in range(len(self.pixels)):
+            self.pixels[i] = color
 
 def init_pygame():
     # initialize the pygame module

@@ -11,9 +11,10 @@ GREEN = (0, 255, 0)
 CYAN = (0, 255, 255)
 BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
+PINK = (255, 0, 127)
 OFF = (0, 0, 0)
 
-color_list = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE]
+color_list = [RED, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK]
 
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
@@ -49,7 +50,7 @@ def explode(wait, times):
     for _ in range (times):  
         for j in range (len(color_list)):
             color = color_list[j]
-            for i in range (num_pixels / 2):
+            for i in range (int(num_pixels / 2)):
                 pixels[11 + i] = color
                 pixels[10 - i] = color
                 pixels.show()
@@ -60,7 +61,7 @@ def init_tape():
     for color in color_list:
         for _ in range (4):
             tape.append(color)
-        for _ in range (4):
+        for _ in range (3):
             tape.append(OFF)
     return tape
 
@@ -72,45 +73,46 @@ def write_tape(tape):
 def update_tape(tape):
     return tape[1:] + tape[:1]
 
-def blaster(tape, times):
-    for _ in range (times * 48):
+def blaster(tape, times, wait):
+    for _ in range (times * 49):
         write_tape(tape)
         tape = update_tape(tape)
-        time.sleep(.1)
+        time.sleep(wait)
 
-def swipe(wait):
+def swipe(wait, times):
     x = 1
-    for j in range (len(color_list)):
-        color = color_list[j]
-        if (x == 1):
- #           x = -1
-            for i in range (num_pixels): 
-                pixels[i] = color
-                pixels.show()
-                time.sleep(wait)
-        elif (x == -1):
- #           x = 1
-            for i in range (num_pixels): 
-                pixels[(num_pixels - i)] = color
-                pixels.show()
-                time.sleep(wait)
-    x = (x * -1)
+    for _ in range (times):
+            for j in range (len(color_list)):
+                color = color_list[j]
+                if (x == 1):
+                    for i in range (num_pixels): 
+                        pixels[i] = color
+                        pixels.show()
+                        time.sleep(wait)
+                    x = 0
+                else:
+                    for i in range (num_pixels - 1, -1, -1): 
+                        pixels[i] = color
+                        pixels.show()
+                        time.sleep(wait)
+                    x = 1
 
-         
 tape = init_tape()
 while True:
-    #explode(.01, 4)
-    #blaster(tape, 2)
-    swipe(.1)
-    # pixels.fill(RED)
-    # pixels.show()
-    # time.sleep(1)
-    # pixels.fill(GREEN)
-    # pixels.show()
-    # time.sleep(1)
-    # pixels.fill(BLUE)
-    # pixels.show()
-    # time.sleep(1)
+    
+    swipe(.05, 1)
+    explode(.05, 4)
+    time.sleep(1)
+    pixels.fill(BLUE)
+    pixels.show()
+    time.sleep(.5)
+    pixels.fill(PURPLE)
+    pixels.show()
+    time.sleep(.5)
+    pixels.fill(PINK)
+    pixels.show()
+    time.sleep(.5)
+    blaster(tape, 4, .05)
 
     # color_chase(RED, 0.1)
     # color_chase(YELLOW, 0.1)
