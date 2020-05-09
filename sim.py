@@ -1,16 +1,13 @@
-# import the pygame module, so you can use it
 import pygame
-import time
-from myloop import the_loop
 
 num_pixels = 22
 OFF = (0,0,0)
 
 class Pixels:
-    def __init__(self, screen, num_pixels):
+    def __init__(self, num_pixels):
         self.pixels = [OFF] * num_pixels
         self.num_pixels = num_pixels
-        self.screen = screen
+        self.screen = init_pygame()
 
     def show(self):
         self.screen.fill(OFF)
@@ -33,10 +30,7 @@ class Pixels:
     def count(self):
         return len(self.pixels)
 
- 
-# define a main function
-def main():
-     
+def init_pygame():
     # initialize the pygame module
     pygame.init()
     # load and set the logo
@@ -44,27 +38,4 @@ def main():
     pygame.display.set_icon(logo)
     pygame.display.set_caption("CircutPython Simulator")
      
-    # create a surface on screen that has the size of 240 x 180
-    screen = pygame.display.set_mode((1500,500))
-     
-    # define a variable to control the main loop
-    running = True
-
-    pixels = Pixels(screen, num_pixels)
-     
-    # main loop
-    while running:
-        the_loop(pixels)
-        # event handling, gets all event from the event queue
-        for event in pygame.event.get():
-            # only do something if the event is of type QUIT
-            if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
-                running = False
-     
-     
-# run the main function only if this module is executed as the main script
-# (if you import this as a module then nothing is executed)
-if __name__=="__main__":
-    # call the main function
-    main()
+    return  pygame.display.set_mode((1500,500))

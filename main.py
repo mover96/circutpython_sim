@@ -1,4 +1,9 @@
 import time
+from sim import Pixels
+
+num_pixels = 22
+
+pixels = Pixels(num_pixels)
 
 RED = (255, 0, 0)
 YELLOW = (255, 150, 0)
@@ -19,7 +24,7 @@ def init_tape():
             tape.append(OFF)
     return tape
 
-def write_tape(pixels, tape):
+def write_tape(tape):
     for i in range(len(pixels)):
         pixels[i] = tape[i]
     pixels.show()
@@ -27,12 +32,12 @@ def write_tape(pixels, tape):
 def update_tape(tape):
     return tape[1:] + tape[:1]
 
-def blaster(pixels, tape, times):
+def blaster(tape, times):
     for _ in range (times * 48):
-        write_tape(pixels, tape)
+        write_tape(tape)
         tape = update_tape(tape)
         time.sleep(.1)
 
 tape = init_tape()
-def the_loop(pixels):
-    blaster(pixels, tape, 2)
+while True:
+    blaster(tape, 1)
